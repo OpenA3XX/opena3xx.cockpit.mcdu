@@ -1,3 +1,4 @@
+
 # export OPEN_A3XX_HARDWARE_PANEL_ID=1
 from digitalio import Direction, Pull
 from RPi import GPIO
@@ -40,7 +41,7 @@ def read_config():
 
 def ping_target(ip, port):
     try:
-        r = requests.get(f'{local_config["opena3xx.perhiperal.api.scheme"]}://{ip}:{port}/session/ping', timeout=10)
+        r = requests.get(f'{local_config["opena3xx.perhiperal.api.scheme"]}://{ip}:{port}/core/heartbeat/ping', timeout=10)
         if r.status_code == 200:
             if r.text == "Pong from OpenA3XX":
                 logger.info("Received Valid Response from OpenA3XX API - Success")
@@ -104,7 +105,7 @@ def bootstrap():
 def keep_alive():
   threading.Timer(5.0, keep_alive).start()
   global api_base_path
-  r = requests.post(f'{api_base_path}/session/keep-alive/21973638-e33f-4bd8-88a6-7ca5d3c161d5')
+  r = requests.post(f'{api_base_path}/hardware-panel/keep-alive/21973638-e33f-4bd8-88a6-7ca5d3c161d5')
 
 
 def main():
